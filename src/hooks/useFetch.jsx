@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 const { VITE_API_URL } = import.meta.env;
 
-const BASE_API_URL = VITE_API_URL || "http://localhost:3000/";
+const BASE_API_URL = VITE_API_URL || "http://localhost:3000";
 
 export default function useFetch(url, options = {}) {
   const [result, setResult] = useState({
@@ -11,7 +11,7 @@ export default function useFetch(url, options = {}) {
   });
 
   useEffect(() => {
-    
+
     console.log("FETCH");
 
       if (!url) return;
