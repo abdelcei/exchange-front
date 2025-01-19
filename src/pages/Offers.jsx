@@ -6,13 +6,13 @@ import OffersDisplay from "../components/OffersTable/OffersTable";
 
 const { VITE_API_URL } = import.meta.env;
 
-const BASE_API_URL = VITE_API_URL || "http://localhost:3000";
+const BASE_API_URL = VITE_API_URL || "http://localhost:300/0";
 
 export default function Offers() {
   const navigate = useNavigate();
   const [searchParams, setSearchParams] = useSearchParams();
   const [offer, setOffer] = useState(null);
-  const [url, setURL] = useState("/offers?");
+  const [url, setURL] = useState("offers?");
   const [params, setParams] = useState({
     currencyFrom: "",
     currencyTo: "",
