@@ -21,6 +21,7 @@ export default function useFetch(url, options = {}) {
 
     const fetchData = async () => {
       const resquestOptions = { ...options, signal: abortController.signal };
+
       try {
         const response = await fetch(BASE_API_URL + url, resquestOptions);
 

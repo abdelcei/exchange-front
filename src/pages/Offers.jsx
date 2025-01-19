@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { CURRENCIES } from "../constants/currencies";
 import useFetch from "../hooks/useFetch";
@@ -9,20 +9,14 @@ const { VITE_API_URL } = import.meta.env;
 const BASE_API_URL = VITE_API_URL || "http://localhost:3000";
 
 export default function Offers() {
-  const navigate = useNavigate();
   const [searchParams, setSearchParams] = useSearchParams();
-  const [offer, setOffer] = useState(null);
-  const [url, setURL] = useState("/offers?limit=20");
-  const [params, setParams] = useState({
-    currencyFrom: "",
-    currencyTo: "",
-    value: "",
-    limit: 10,
-  });
 
   const currencyFrom = useRef();
   const currencyTo = useRef();
   const amountValue = useRef();
+
+
+  const { data: offers } = useFetch(`/offers?${searchParams.toString()}`);
 
   const actions = [
     {
@@ -30,8 +24,6 @@ export default function Offers() {
       handler: (offer) => handleOfferView(offer.creator_id),
     },
   ];
-
-  const { data: offers } = useFetch(url + searchParams.toString());
 
   const handleOfferView = (offerCreatorId) => {
     const abortController = new AbortController();
@@ -68,23 +60,20 @@ export default function Offers() {
       abortController.abort();
     };
   };
+  
+  const onChangedField = (field, value) => {
 
+    const newParams = new URLSearchParams(searchParams);
+    newParams.set(field, value);
+    setSearchParams(newParams)
+  };
+  
   const handleFormSubmit = (e) => {
     e.preventDefault();
-    onChangedField("value", amountValue.current.value);
+    if (amountValue.current.value)
+    onChangedField("amount", amountValue.current?.value);
   };
-
-  const onChangedField = (field, value) => {
-    const newParams = { ...params, [field]: value };
-
-    setParams(newParams);
-
-    const queryParams = new URLSearchParams(newParams).toString();
-
-    navigate("/offers?" + queryParams);
-    // setURL("/offers?" + queryParams);
-  };
-
+  
   return (
     <>
       <SectionOffersBanner></SectionOffersBanner>
@@ -93,7 +82,7 @@ export default function Offers() {
         <div className="mx-auto flex w-11/12 flex-col items-center justify-start">
           <form
             className="mx-auto my-6 grid min-h-10 w-full max-w-7xl grid-cols-2 items-start justify-start gap-4 text-white lg:grid-cols-8"
-            onSubmit={() => handleFormSubmit()}
+            onSubmit={handleFormSubmit}
           >
             <FormGridElement>
               <label className="font-medium" htmlFor="dropdownCFrom">
@@ -103,11 +92,9 @@ export default function Offers() {
                 id="dropdownCFrom"
                 className="w-full rounded-2xl border border-white bg-transparent p-2.5 text-white"
                 ref={currencyFrom}
-                defaultValue={
-                  currencyFrom.current ? currencyFrom.current.value : ""
-                }
+                defaultValue={searchParams.get("currencyFrom") || ""}
                 onChange={() => {
-                  onChangedField("currencyFrom", currencyFrom.current.value);
+                  onChangedField("currencyFrom", currencyFrom.current?.value);
                 }}
               >
                 <option className="text-black" value="">
@@ -120,7 +107,7 @@ export default function Offers() {
                     value={currency.value}
                     disabled={
                       currencyTo.current
-                        ? currencyTo.current.value == currency.value
+                        ? currencyTo.current?.value == currency.value
                         : false
                     }
                   >
@@ -137,14 +124,12 @@ export default function Offers() {
                 id="dropdownCTo"
                 className="w-full rounded-2xl border border-white bg-transparent p-2.5 text-white"
                 ref={currencyTo}
-                defaultValue={
-                  currencyTo.current ? currencyTo.current.value : ""
-                }
+                defaultValue={searchParams.get("currencyTo") || ""}
                 onChange={() => {
-                  onChangedField("currencyTo", currencyTo.current.value);
+                  onChangedField("currencyTo", currencyTo.current?.value);
                 }}
               >
-                <option className="text-white" value="">
+                <option className="text-black" value="">
                   Cualquiera
                 </option>
                 {CURRENCIES.map((currency) => (
@@ -154,7 +139,7 @@ export default function Offers() {
                     value={currency.value}
                     disabled={
                       currencyFrom.current
-                        ? currencyFrom.current.value == currency.value
+                        ? currencyFrom.current?.value == currency.value
                         : false
                     }
                   >
@@ -167,12 +152,12 @@ export default function Offers() {
               <label className="font-medium" htmlFor="amountValue">
                 Cuánto quieres cambiar:
               </label>
-
               <input
                 id="amountValue"
                 step={1}
                 type="number"
                 ref={amountValue}
+                defaultValue={searchParams.get("amount") || ""}
                 className="w-full rounded-2xl border border-white bg-transparent p-2.5 text-white"
                 placeholder="Cantidad"
               />
