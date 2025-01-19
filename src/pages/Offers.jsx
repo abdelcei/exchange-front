@@ -12,7 +12,7 @@ export default function Offers() {
   const navigate = useNavigate();
   const [searchParams, setSearchParams] = useSearchParams();
   const [offer, setOffer] = useState(null);
-  const [url, setURL] = useState("/offers?");
+  const [url, setURL] = useState("/offers?limit=20");
   const [params, setParams] = useState({
     currencyFrom: "",
     currencyTo: "",
@@ -177,10 +177,9 @@ export default function Offers() {
                 placeholder="Cantidad"
               />
             </FormGridElement>
-            <input
-              type="submit"
+            <button type="submit"
               className="col-span-1 w-full self-end justify-self-end rounded-full bg-emeraldGreen-500 px-6 py-3 text-[1rem] font-medium text-white hover:bg-emeraldGreen-700 active:bg-emeraldGreen-500 lg:col-span-2 lg:max-w-32"
-            />
+            >Buscar</button>
           </form>
           {offers && <OffersDisplay offers={offers} actions={actions} />}
         </div>
@@ -189,9 +188,9 @@ export default function Offers() {
   );
 }
 
-export function PopupOfferView({ offer }) {
-  return <></>;
-}
+// export function PopupOfferView({ offer }) {
+//   return <></>;
+// }
 
 export function SectionOffersBanner() {
   return (
