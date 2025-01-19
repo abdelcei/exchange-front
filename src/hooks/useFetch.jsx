@@ -11,10 +11,9 @@ export default function useFetch(url, options = {}) {
   });
 
   useEffect(() => {
-
     console.log("FETCH");
 
-      if (!url) return;
+    if (!url) return;
     const abortController = new AbortController();
 
     console.log(BASE_API_URL + url);

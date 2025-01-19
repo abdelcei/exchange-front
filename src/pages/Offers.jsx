@@ -15,7 +15,6 @@ export default function Offers() {
   const currencyTo = useRef();
   const amountValue = useRef();
 
-
   const { data: offers } = useFetch(`/offers?${searchParams.toString()}`);
 
   const actions = [
@@ -33,7 +32,7 @@ export default function Offers() {
       try {
         const response = await fetch(
           BASE_API_URL + "/user/" + offerCreatorId,
-          resquestOptions,
+          resquestOptions
         );
 
         if (!response.ok) {
@@ -45,7 +44,7 @@ export default function Offers() {
         return window.open(
           `https://t.me/${data.tg_handle}`,
           "_blank",
-          "noopener,noreferrer",
+          "noopener,noreferrer"
         );
       } catch (error) {
         if (error.name !== "AbortError") {
@@ -60,20 +59,19 @@ export default function Offers() {
       abortController.abort();
     };
   };
-  
-  const onChangedField = (field, value) => {
 
+  const onChangedField = (field, value) => {
     const newParams = new URLSearchParams(searchParams);
     newParams.set(field, value);
-    setSearchParams(newParams)
+    setSearchParams(newParams);
   };
-  
+
   const handleFormSubmit = (e) => {
     e.preventDefault();
     if (amountValue.current.value)
-    onChangedField("amount", amountValue.current?.value);
+      onChangedField("amount", amountValue.current?.value);
   };
-  
+
   return (
     <>
       <SectionOffersBanner></SectionOffersBanner>
@@ -162,9 +160,12 @@ export default function Offers() {
                 placeholder="Cantidad"
               />
             </FormGridElement>
-            <button type="submit"
+            <button
+              type="submit"
               className="col-span-1 w-full self-end justify-self-end rounded-full bg-emeraldGreen-500 px-6 py-3 text-[1rem] font-medium text-white hover:bg-emeraldGreen-700 active:bg-emeraldGreen-500 lg:col-span-2 lg:max-w-32"
-            >Buscar</button>
+            >
+              Buscar
+            </button>
           </form>
           {offers && <OffersDisplay offers={offers} actions={actions} />}
         </div>
@@ -172,10 +173,6 @@ export default function Offers() {
     </>
   );
 }
-
-// export function PopupOfferView({ offer }) {
-//   return <></>;
-// }
 
 export function SectionOffersBanner() {
   return (
