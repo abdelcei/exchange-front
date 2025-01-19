@@ -11,6 +11,7 @@ export default function useFetch(url, options = {}) {
   });
 
   useEffect(() => {
+    
     console.log("FETCH");
 
       if (!url) return;

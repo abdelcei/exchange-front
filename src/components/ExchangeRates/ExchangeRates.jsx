@@ -9,7 +9,7 @@ const HEADINGS = [
 ];
 
 export default function ExchangeRates() {
-  const exchangeRatesResponse = useFetch("rates");
+  const exchangeRatesResponse = useFetch("/rates");
 
   return (
     <div className="flex w-full flex-col items-center justify-center">
