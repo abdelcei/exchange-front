@@ -1,4 +1,5 @@
-/* eslint-disable react/prop-types */
+// User.jsx: Página de perfil del usuario, donde puede gestionar sus ofertas y ver información personal.
+
 import { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import useFetch from "../hooks/useFetch";
@@ -6,10 +7,15 @@ import { NavBarButton } from "../components/Header/Header";
 import { OfferPopup } from "../components/OfferPopup/OfferPopup";
 import { UserContext } from "../context/UserContext";
 import OffersDisplay from "../components/OffersTable/OffersTable";
-const { VITE_API_URL } = import.meta.env;
 
+// Varible entorno de acceso a la API.
+const { VITE_API_URL } = import.meta.env;
 const BASE_API_URL = VITE_API_URL || "http://localhost:3000";
 
+// Componente principal: Página del perfil del usuario.
+// Contexto global del usuario logueado.
+// Estado local para manejar el popup de ofertas y las ofertas del usuario.
+// Hook para redirección.
 export default function User() {
   const { user } = useContext(UserContext);
   
@@ -18,35 +24,34 @@ export default function User() {
 
   const navigate = useNavigate();
 
-  useEffect(() => {console.log("1", user)
+  // Redirige al usuario al login si no está autenticado.
+  useEffect(() => {
     if (!user) return navigate("/login");
   }, [user, navigate]);
 
+  // Peticiones para obtener datos del usuario.
   const {
     data: userInfo,
-    error: userInfoError,
-    loading: userInfoLoading,
   } = useFetch("/user/" + user);
 
+  // Peticiones para obtener datos de las ofertas del usuario.
   const {
     data: userOffers,
-    error: userOffersError,
-    loading: userOffersLoading,
   } = useFetch(`/${user}/offers`);
 
-  console.log(userOffers);
-
+  // Actualiza el estado de las ofertas cuando se obtienen los datos.
   useEffect(() => {
     if (userOffers) {
       setUserOffersState(userOffers);
     }
   }, [userOffers]);
 
+  // Maneja la visibilidad del popup de edición/creación de ofertas.
   const handlePopupOffer = (offer = {}) => {
-    console.log(offer);
     setPopupOffer(offer);
   };
 
+  // Maneja la eliminación de una oferta específica.
   const handleOfferDelete = async (offer) => {
     const { _id: id } = offer;
 
@@ -71,12 +76,11 @@ export default function User() {
       const data = await response.json();
 
       if (data) {
-        console.log(data);
         setUserOffersState(data);
       }
     } catch (error) {
       if (error.name !== "AbortError") {
-        setResult({ data: null, error, loading: false });
+        console.log(error)
       }
     } 
     
@@ -87,6 +91,7 @@ export default function User() {
     
   };
 
+  // Definición de las acciones disponibles para las ofertas.
   const actions = [
     {
       name: "Editar",
@@ -140,6 +145,12 @@ export default function User() {
     </>
   );
 }
+
+// Componente: Sección superior del banner con estilo personalizable.
+// Props:
+// - children: Elementos a renderizar dentro del banner.
+// - color: Color de fondo del banner (por defecto blanco).
+// - backgroundImg: Imagen de fondo del banner.
 
 export function SectionBannerTop({ children, color = "white" , backgroundImg }) {
 

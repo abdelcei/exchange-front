@@ -1,20 +1,23 @@
+// Footer.jsx: Componente para el footer.
+// Contiene enlaces, información legal y el logotipo.
+
 import { NavLink } from "react-router-dom";
 import { NavBarLogo } from "../Header/Header";
 
+// Contiene enlaces a las secciones más importantes de la aplicación.
+const FooterLinks = [
+  { id: "0", title: "Ofertas", to: "/offers" },
+  { id: "1", title: "Tu Perfil", to: "/user" },
+];
+
+// Incluye enlaces a las políticas y términos legales de la aplicación.
+const FooterLegal = [
+  { id: "0", title: "Términos y condiciones", to: "/terminos_condiciones" },
+  { id: "1", title: "Política de privacidad", to: "/politica_de_privacidad" },
+  { id: "2", title: "Cookies", to: "/cookies" },
+];
+
 export default function Footer() {
-
-  const FooterLinks = [
-    { id: "0", title: "Ofertas", to: "/offers" },
-    { id: "1", title: "Tu Perfil", to: "/user" },
-  ];
-  
-  const FooterLegal = [
-    { id: "0", title: "Términos y condiciones", to: "/terminos_condiciones" },
-    { id: "1", title: "Política de privacidad", to: "/politica_de_privacidad" },
-    { id: "2", title: "Cookies", to: "/cookies" },
-  ];
-
-
   return (
     <div className="min-h-40 w-full bg-emeraldGreen-500">
       <div className="mx-auto grid h-full w-full grid-cols-2 gap-x-1 gap-y-4 md:gap-6 py-8 text-center md:grid-cols-3 lg:max-w-7xl">

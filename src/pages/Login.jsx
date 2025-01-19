@@ -1,10 +1,20 @@
+// Login.jsx: Componente para la página de inicio de sesión.
+// Permite a los usuarios autenticarse con un nombre de usuario o correo electrónico y contraseña.
+// Valida los datos antes de enviarlos y redirige al usuario si el inicio de sesión es exitoso.
+
 import { useContext, useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { UserContext } from "../context/UserContext";
 
+// Constante de configuración para la API.
 const { VITE_API_URL } = import.meta.env;
 const BASE_API_URL = VITE_API_URL || "http://localhost:3000";
 
+// Componente principal: Página de inicio de sesión.
+// Hook de contexto del usuario para manejar el inicio de sesión.
+// Hook de navegación.
+// Hooks de refernecia al form de login.
+// Estado local para manejar las credenciales y el resultado de la solicitud.
 export default function Login() {
   const { login } = useContext(UserContext);
   const navigate = useNavigate();
@@ -18,6 +28,7 @@ export default function Login() {
     loading: false,
   });
 
+  // Maneja el envío del formulario de inicio de sesión.
   const loginSubmit = (e) => {
     e.preventDefault();
     setResult({ ...result, loading: true });
@@ -37,6 +48,7 @@ export default function Login() {
     }
   };
 
+  // Al modificarse las credenciales las envia al servidor y manejar la respuesta.
   useEffect(() => {
     if (!credentials) return;
 
@@ -136,10 +148,12 @@ export default function Login() {
   );
 }
 
+// Valida si una cadena contiene un símbolo '@'.
 function containsAtSymbol(str) {
   return str.includes("@");
 }
 
+// Valida si un correo electrónico tiene un formato correcto.
 function isValidEmail(email) {
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   return emailRegex.test(email);

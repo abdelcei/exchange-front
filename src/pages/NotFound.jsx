@@ -1,6 +1,12 @@
+// NotFound.jsx: Página para manejar errores 404.
+// Se muestra cuando un usuario intenta acceder a una ruta no definida en la aplicación.
+// Incluye un mensaje de error, un botón para regresar a la página de inicio y la sección de tasas de cambio.
+
 import { NavBarButton } from "../components/Header/Header";
 import ExchangeRates from "../components/ExchangeRates/ExchangeRates";
 
+// Componente principal: Página de No encontrado.
+// Estructura muy similar a la del Home modificando el mensaje, y la redirección del botón.
 export default function NotFound() {
 
   return (

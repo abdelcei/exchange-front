@@ -1,6 +1,9 @@
+// OffersTable.jsx: Componente para mostrar y acciones de las ofertas en formato de tabla o lista.
+// Proporciona una vista responsive para escritorio y móvil, con acciones configurables para cada oferta.
 import { useState } from "react";
 import { NavBarButton } from "../Header/Header";
 
+// Headers de la tabla de ofertas
 const OFFER_TABLE_HEADERS = [
   { id: "0", title: "Monedas" },
   { id: "1", title: "Precio" },
@@ -9,6 +12,10 @@ const OFFER_TABLE_HEADERS = [
   { id: "4", title: "Acciones" },
 ];
 
+// Componente principal: Muestra las ofertas en una tabla o lista según el tamaño de la pantalla.
+// Props:
+// - offers: Lista de ofertas a mostrar.
+// - actions: Acciones configurables para cada oferta.
 export default function OffersDisplay({ offers, actions }) {
   return (
     <div className="mb-16 min-h-[75vh] w-full max-w-7xl overflow-x-auto rounded-2xl bg-gray-100">
@@ -36,6 +43,7 @@ export default function OffersDisplay({ offers, actions }) {
   );
 }
 
+// Componente: Encabezado de la tabla.
 export function TableHead({ children }) {
   return (
     <thead className="bg-darkSlate-100">
@@ -44,6 +52,9 @@ export function TableHead({ children }) {
   );
 }
 
+// Componente: Encabezado de una columna de la tabla.
+// Props:
+// - title: Título del encabezado.
 export function TableHeader({ title, classname }) {
   return (
     <th
@@ -57,9 +68,12 @@ export function TableHeader({ title, classname }) {
   );
 }
 
+// Componente: Fila de la tabla que representa una oferta.
+// Props:
+// - offer: Datos de la oferta.
+// - actions: Acciones configurables para la oferta.
 export function TableOffer({ offer, actions }) {
   const [activeOffer, setActiveOffer] = useState(null);
-
 
   return (
     <tr
@@ -83,6 +97,7 @@ export function TableOffer({ offer, actions }) {
   );
 }
 
+// Componente: Muestra las monedas del par de divisas.
 export function TableOfferPair({ currencyFrom, currencyTo }) {
   return (
     <td className="py-4 pl-6 p-2 border-b border-darkSlate-200">
@@ -95,6 +110,7 @@ export function TableOfferPair({ currencyFrom, currencyTo }) {
   );
 }
 
+// Componente: Muestra la tasa de cambio.
 export function TableOfferRate({ rate }) {
   return (
     <td className="border-b border-darkSlate-200 p-2 py-4 pl-6">
@@ -105,6 +121,7 @@ export function TableOfferRate({ rate }) {
   );
 }
 
+// Componente: Muestra el rango de cantidades disponibles.
 export function TableOfferAmounts({ amountMin, amountMax, currencyFrom }) {
   return (
     <td className="border-b border-darkSlate-200 p-2 py-4 pl-6">
@@ -118,6 +135,7 @@ export function TableOfferAmounts({ amountMin, amountMax, currencyFrom }) {
   );
 }
 
+// Componente: Muestra la descripción de la oferta.
 export function TableOfferDescription({ description }) {
   return (
     <td className="border-b border-darkSlate-200 p-2 py-4 pl-6">
@@ -126,6 +144,10 @@ export function TableOfferDescription({ description }) {
   );
 }
 
+// Componente: Muestra las acciones disponibles para la oferta.
+// Props:
+// - actions: Lista de acciones.
+// - offer: Datos de la oferta.
 export function TableOfferAction({ actions, offer }) {
   return (
     <td className="border-b border-darkSlate-200 p-2 py-4 pl-6">
@@ -140,6 +162,10 @@ export function TableOfferAction({ actions, offer }) {
   );
 }
 
+// Componente: Botón para realizar una acción específica sobre una oferta.
+// Props:
+// - action: Acción/funcion.
+// - offer: Datos de la oferta.
 export function TableActionButton({ action, classname, color, offer }) {
   const finalColor = action.color || color || "gray";
 
@@ -153,6 +179,7 @@ export function TableActionButton({ action, classname, color, offer }) {
   );
 }
 
+// Componente: Vista móvil para una oferta.
 export function Offer({ offer, actions }) {
   return (
     <div
@@ -185,6 +212,10 @@ export function Offer({ offer, actions }) {
   );
 }
 
+// Componente: Representa el par de monedas para la vista móvil.
+// Props:
+// - currencyFrom: Moneda de origen.
+// - currencyTo: Moneda de destino.
 export function OfferPair({ currencyFrom, currencyTo }) {
   return (
     <div className="flex flex-row items-center justify-start gap-2">
@@ -194,6 +225,10 @@ export function OfferPair({ currencyFrom, currencyTo }) {
     </div>
   );
 }
+
+// Componente: Representa la tasa de cambio en la vista móvil.
+// Props:
+// - rate: Valor de la tasa de cambio.
 export function OfferRate({ rate }) {
   return (
     <span className="rounded-full bg-darkSlate-100 px-2.5 py-0.5 text-sm font-medium text-darkSlate-800">
@@ -201,6 +236,12 @@ export function OfferRate({ rate }) {
     </span>
   );
 }
+
+// Componente: Representa el rango de cantidades disponibles en la vista móvil.
+// Props:
+// - amountMin: Cantidad mínima disponible.
+// - amountMax: Cantidad máxima disponible.
+// - currencyFrom: Moneda asociada a las cantidades.
 export function OfferAmounts({ amountMin, amountMax, currencyFrom }) {
   return (
     <div className="text- flex items-center gap-1 text-sm font-medium">
@@ -211,9 +252,18 @@ export function OfferAmounts({ amountMin, amountMax, currencyFrom }) {
     </div>
   );
 }
+
+// Componente: Muestra la descripción de la oferta en la vista móvil.
+// Props:
+// - description: Texto descriptivo de la oferta.
 export function OfferDescription({ description }) {
   return <p className="text-sm">{description}</p>;
 }
+
+// Componente: Acciones asociadas a una oferta en la vista móvil.
+// Props:
+// - actions: Lista de acciones.
+// - offer: Datos de la oferta.
 export function OfferAction({ actions, offer }) {
   return (
     <div className="flex flex-row items-center gap-2 self-end">
@@ -226,6 +276,11 @@ export function OfferAction({ actions, offer }) {
   );
 }
 
+// Componente: Botón para ejecutar una acción en la vista móvil.
+// Props:
+// - action: Objeto de la acción (nombre, handler/función).
+// - offer: Datos de la oferta a la que se aplicará la acción.
+// - color: Color del botón (opcional).
 export function ActionButton({ action, children, color, offer }) {
   const finalColor = action.color || color || "gray";
 

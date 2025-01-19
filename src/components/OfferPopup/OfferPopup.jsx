@@ -1,12 +1,21 @@
-/* eslint-disable react/prop-types */
+// OfferPopup.jsx: Componente para crear o editar ofertas de intercambio de divisas.
+// Formulario para ingresar los detalles de la oferta.
 import { useContext, useRef, useState } from "react";
 import { CURRENCIES } from "../../constants/currencies";
 import { NavBarButton } from "../Header/Header";
 import { UserContext } from "../../context/UserContext";
-const { VITE_API_URL } = import.meta.env;
 
+// Variable de entorno de acceso a la API.
+const { VITE_API_URL } = import.meta.env;
 const BASE_API_URL = VITE_API_URL || "http://localhost:3000";
 
+//Componente principal del Header
+// Estado global del usuario autenticado.
+// Props
+// offer Oferta en cuestion
+// setUserOffersState Estado de las ofertas
+// onClose Funcion visibilidad al componente
+//
 export function OfferPopup(props) {
   const { user: userLogged} = useContext(UserContext);
   const { offer, setUserOffersState, onClose } = props;
@@ -16,11 +25,8 @@ export function OfferPopup(props) {
     loading: false,
   });
 
-  console.log(offer);
-
-  console.log(Object.keys(offer).length);
+  // Determina si se está editando una oferta existente o creando una nueva.
   const isUpdating = Boolean(Object.keys(offer).length);
-  console.log(isUpdating);
 
   const initialValues = offer
     ? {
@@ -47,15 +53,7 @@ export function OfferPopup(props) {
   const rate = useRef();
   const description = useRef();
 
-  // const validateForm =  () => {
-  //   const newErrors = {};
-  //   // if (currencies.current.value)
-  //   // if (amountMin.current.value)
-  //   // if (amountMax.current.value)
-  //   // if (rate.current.value)
-  //   // if (description.current.value)
-  // }
-  
+  // Maneja la creación o edición de la oferta.
   const handleOfferCreate = async (e) => {
     e.preventDefault();
 
@@ -77,8 +75,6 @@ export function OfferPopup(props) {
       rate: rateInput.value,
       description: descriptionInput.value,
     };
-
-    // FETCHHH
 
     setResult({ ...result, loading: true });
 
@@ -105,7 +101,6 @@ export function OfferPopup(props) {
       setResult({ data, error: null, loading: false });
 
       if (data) {
-        console.log(data);
         setUserOffersState(data);
       }
 

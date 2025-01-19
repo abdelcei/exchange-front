@@ -1,11 +1,15 @@
+// Home.jsx: Página Home que define la estructura de la página de inicio de la aplicación.
+// Consta de dos componente principales (secciones).
+
 import { NavBarButton } from "../components/Header/Header";
 import ExchangeRates from "../components/ExchangeRates/ExchangeRates";
 
+// Definición de los elementos de la sección Como Funciona.
+// Cada elemento incluye un id único, un título, descripción e imagen y texto alternativo correspondiente.
 const HOW_IT_WORKS = [
   {
     id: "0",
     title: "Paso 1",
-    number: "1",
     description: "Consulta<br/>la tasa justa.",
     src: "/imgs/como-funciona-mira-la-tasa.webp",
     alt: "Como funciona, averigua las tasas en el agro",
@@ -13,7 +17,6 @@ const HOW_IT_WORKS = [
   {
     id: "1",
     title: "Paso 2",
-    number: "2",
     description: "Explora o publica ofertas.",
     src: "/imgs/como-funciona-averigua-ofertas.webp",
     alt: "Como funciona, averigua las ofertas en el domino",
@@ -21,13 +24,13 @@ const HOW_IT_WORKS = [
   {
     id: "2",
     title: "Paso 3",
-    number: "3",
     description: "Contacta directamente con los vendedores.",
     src: "/imgs/como-funciona-contacta.webp",
     alt: "Como funciona, echale una llamada",
   },
 ];
 
+// Componente principal de la página Home.
 export default function Home() {
   return (
     <>
@@ -37,6 +40,8 @@ export default function Home() {
   );
 }
 
+// Componente: Banner principal de la página Home.
+// Muestra un título destacado, una breve descripciónn, un botón de navegación y llama a otro componente que muestra las tasas de cambio del momento
 export function SectionHomeTwoElements() {
   return (
     <div className="h-screen w-full bg-home-banner bg-cover bg-center">
@@ -63,6 +68,8 @@ export function SectionHomeTwoElements() {
   );
 }
 
+// Componente: Sección "Cómo Funciona".
+// Muestra una lista de pasos para explicar el funcionamiento de la plataforma.
 export function SectionHowItWorks() {
   return (
     <div className="min-h-screen w-full bg-white lg:pt-28">
@@ -84,6 +91,9 @@ export function SectionHowItWorks() {
   );
 }
 
+// Componente: Representa un paso individual en la sección "Cómo Funciona".
+// Props:
+// - howItWorksStep: Objeto con datos del paso (título, descripción, imagen).
 export function HowItWorksStep({ howItWorksStep }) {
   return (
     <div className="lg:max-w-1/3 relative flex w-full grow flex-col items-center justify-center gap-4 lg:justify-start">

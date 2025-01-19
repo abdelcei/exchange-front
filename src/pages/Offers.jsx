@@ -1,12 +1,24 @@
-import { useEffect, useRef, useState } from "react";
-import { useNavigate, useSearchParams } from "react-router-dom";
+// Offers.jsx: Página para explorar y gestionar ofertas de intercambio de divisas.
+// Permite a los usuarios buscar ofertas según las monedas y cantidades deseadas, y contactar directamente al ofertante.
+
+import { useRef } from "react";
+import { useSearchParams } from "react-router-dom";
 import { CURRENCIES } from "../constants/currencies";
 import useFetch from "../hooks/useFetch";
 import OffersDisplay from "../components/OffersTable/OffersTable";
 
+// Constante de configuración de la API.
+// Usa una variable de entorno para definir la URL base de la API, con un valor por defecto en localhost.
 const { VITE_API_URL } = import.meta.env;
-
 const BASE_API_URL = VITE_API_URL || "http://localhost:3000";
+
+// Componente principal: Página de Ofertas.
+// useSearchParams :   Manejo de parámetros de búsqueda en la URL.
+// Referencias para los campos del formulario
+// currencyFrom
+// currencyTo
+// amountValue        
+// Hook personalizado para obtener datos de ofertas según los parámetros de búsqueda.
 
 export default function Offers() {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -24,6 +36,7 @@ export default function Offers() {
     },
   ];
 
+  // Función para manejar la visualización de detalles de un creador de oferta.
   const handleOfferView = (offerCreatorId) => {
     const abortController = new AbortController();
 
@@ -48,7 +61,7 @@ export default function Offers() {
         );
       } catch (error) {
         if (error.name !== "AbortError") {
-          // setResult({ data: null, error, loading: false });
+          console.log(error)
         }
       }
     };
@@ -60,12 +73,14 @@ export default function Offers() {
     };
   };
 
+  // Actualiza los parámetros de búsqueda cuando un campo cambia.
   const onChangedField = (field, value) => {
     const newParams = new URLSearchParams(searchParams);
     newParams.set(field, value);
     setSearchParams(newParams);
   };
 
+  // Maneja el envío del formulario y actualiza los parámetros de búsqueda.
   const handleFormSubmit = (e) => {
     e.preventDefault();
     if (amountValue.current.value)
@@ -174,6 +189,7 @@ export default function Offers() {
   );
 }
 
+// Componente: Banner para la sección de ofertas.
 export function SectionOffersBanner() {
   return (
     <div className="bg-offers-banner relative -z-10 h-[35vh] min-h-72 w-full bg-cover bg-bottom">
@@ -187,6 +203,7 @@ export function SectionOffersBanner() {
   );
 }
 
+// Componente reutilizable para un elemento del formulario.
 export function FormGridElement({ children }) {
   return (
     <>

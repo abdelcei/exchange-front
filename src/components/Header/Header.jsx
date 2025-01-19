@@ -1,9 +1,17 @@
+// Header.jsx: Componente para el Header.
+
 import { useContext, useState } from "react";
 import { NavLink, useLocation, useNavigate } from "react-router-dom";
 import { UserContext } from "../../context/UserContext";
 
+// Enlaces principales de navegación.
 const navBarLinks = [{ id: 0, title: "Ofertas", to: "/offers" }];
 
+//Componente principal del Header
+// Hook de Navegación.
+// Hook que obtiene la ubicación actual.
+// Estado del menu
+// Estado del usuario desde el contexto global.
 export default function Header() {
   const navigate = useNavigate();
   const location = useLocation();
@@ -11,20 +19,14 @@ export default function Header() {
 
   const { user, logout } = useContext(UserContext);
 
+  // Maneja el cierre de sesión del usuario.
   const handleLogout = () => {
-    console.log("logginOUT");
-
     logout();
-  };
-
-  const handleClickMobileLink = (to) => {
-    setOpenMenu(!openMenu);
-    navigate(to);
   };
 
   return (
     <header
-      className={`${openMenu ? "bg-emerald-500" : "bg-white/10"} fixed left-0 top-0 z-10 h-14 w-full bg-white/10 py-2 backdrop-blur-sm`}
+      className={`${openMenu ? 'bg-emerald-500' : 'bg-white/10'} fixed left-0 top-0 z-10 h-14 w-full bg-white/10 py-2 backdrop-blur-sm`}
     >
       <div
         className={`${openMenu ? "hidden" : ""} absolute bottom-0 left-0 h-5 w-full translate-y-full transform bg-gradient-to-t from-transparent to-white/10`}
@@ -129,6 +131,10 @@ export default function Header() {
   );
 }
 
+// Componente: Logotipo de la aplicación.
+// Props:
+// - className: Clase personalizada.
+// - color: Color del texto del logotipo.
 export const NavBarLogo = ({ className, color }) => {
   const colorClasses = {
     green:
@@ -150,6 +156,7 @@ export const NavBarLogo = ({ className, color }) => {
   );
 };
 
+// Componente: Enlace de la barra de navegación.
 const NavBarLink = ({ title, to, className, children }) => {
   if (!title && !children) return null;
 
@@ -170,14 +177,13 @@ const NavBarLink = ({ title, to, className, children }) => {
   );
 };
 
-export const NavBarButton = ({
-  title,
-  to,
-  className,
-  onClick,
-  color,
-  children,
-}) => {
+// Componente: Botón reutilizable para navegación o acciones.
+// Props:
+// - title: Texto del botón.
+// - to: Ruta de navegación.
+// - onClick: Acción personalizada al hacer clic.
+// - color: Estilo de color.
+export const NavBarButton = ({ title, to, className, onClick, color, children,}) => {
   const navigate = useNavigate();
 
   const colorClasses = {
@@ -211,6 +217,7 @@ export const NavBarButton = ({
   );
 };
 
+// Componente: Enlace móvil de la barra de navegación movil.
 const NavBarMobileLink = ({ title, children, onClick }) => {
   if (!title && !children) return null;
 

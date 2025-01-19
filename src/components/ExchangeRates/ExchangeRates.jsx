@@ -1,23 +1,26 @@
+// ExchangeRates.jsx: Componente para mostrar las tasas de cambio.
+// Este componente muestra una lista de pares de divisas con sus tasas de compra y venta en relación a la moneda nacional.
+
 import { EXCHANGE_RATE_PAIRS } from "../../constants/exchangeRatePairs";
 import { flags } from "../../constants/flags";
 import useFetch from "../../hooks/useFetch";
 
+// Encabezados de la tabla de tasas de cambio.
 const HEADINGS = [
   { id: "0", title: "Moneda" },
   { id: "1", title: "Compra" },
   { id: "2", title: "Venta" },
 ];
 
+// Componente principal: Muestra la lista de tasas de cambio.
 export default function ExchangeRates() {
+  // Realiza la petición para obtener las tasas de cambio.
   const exchangeRatesResponse = useFetch("/rates");
 
   return (
     <div className="flex w-full flex-col items-center justify-center">
       <div className="flex w-4/5 max-w-[85vw] flex-col gap-2 rounded-2xl bg-white/60 p-4 md:max-w-[60vw] lg:max-w-[40vw]">
         <div className="flex w-full flex-row items-center justify-evenly rounded-2xl bg-emeraldGreen-400 lg:justify-between">
-          {/* { HEADINGS.map((heading) => (
-              <ExchangeRatesHeading key={heading.id} heading={heading} />
-            ))} */}
           <div className="flex w-1/3 flex-row items-center justify-start rounded-2xl lg:min-w-32">
             <span className="mx-auto py-2 text-lg lg:py-4 lg:text-xl">
               Moneda
@@ -50,6 +53,9 @@ export default function ExchangeRates() {
   );
 }
 
+// Componente: Encabezados de la tabla de tasas de cambio.
+// Props:
+// - heading: Objeto que contiene el título del encabezado.
 export function ExchangeRatesHeading({ heading }) {
   return (
     <div className="flex flex-row items-center justify-center rounded-2xl lg:w-1/4 lg:min-w-32">
@@ -60,6 +66,10 @@ export function ExchangeRatesHeading({ heading }) {
   );
 }
 
+// Componente: Representa un par de divisas con sus tasas de compra y venta.
+// Props:
+// - exchangeRates: Datos de las tasas de cambio.
+// - ratePair: Par de divisas.
 export function CurrencyPair({ exchangeRates, ratePair }) {
   return (
     <div className="flex w-full flex-row gap-2">
@@ -90,6 +100,11 @@ export function CurrencyPair({ exchangeRates, ratePair }) {
   );
 }
 
+// Componente: Muestra una tasa de cambio específica.
+// Props:
+// - exchangeRates: Datos de las tasas de cambio.
+// - currencyFrom: Moneda de origen.
+// - currencyTo: Moneda de destino.
 export function CurrencyRate({ exchangeRates, currencyFrom, currencyTo }) {
   const { data: ratios, error, loading } = exchangeRates;
 
